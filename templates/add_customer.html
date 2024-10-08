@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block title %}Add Customer{% endblock %}
+
+{% block content %}
+<h1>Add a New Customer</h1>
+<form id="customerForm">
+    <input type="text" id="name" placeholder="Name" required>
+    <input type="text" id="city" placeholder="City" required>
+    <input type="number" id="age" placeholder="Age" required>
+    <button type="submit">Add Customer</button>
+</form>
+
+<script>
+document.getElementById('customerForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    const name = document.getElementById('name').value;
+    const city = document.getElementById('city').value;
+    const age = document.getElementById('age').value;
+
+    const data = {
+        name: name,
+        city: city,
+        age: age
+    };
+
+    fetch('/customers', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json' 
+        },
+        body: JSON.stringify(data)
+    })
+    .then(response => {
+        if (response.ok) {
+            alert('Customer added successfully!');
+        } else {
+            alert('Failed to add customer.');
+        }
+    })
+    .catch(error => console.error('Error:', error));
+});
+</script>
+{% endblock %}

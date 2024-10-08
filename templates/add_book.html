@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+{% block title %}Add Book{% endblock %}
+
+{% block content %}
+<h1>Add a New Book</h1>
+<form id="bookForm" class="p-4 border rounded">
+    <div class="form-group">
+        <label for="title">Title</label>
+        <input type="text" class="form-control" id="title" placeholder="Title" required>
+    </div>
+    <div class="form-group">
+        <label for="author">Author</label>
+        <input type="text" class="form-control" id="author" placeholder="Author" required>
+    </div>
+    <div class="form-group">
+        <label for="year">Year</label>
+        <input type="number" class="form-control" id="year" placeholder="Year" required>
+    </div>
+    <div class="form-group">
+        <label for="category">Category</label>
+        <input type="text" class="form-control" id="category" placeholder="Category" required>
+    </div>
+    <div class="form-check">
+        <input type="checkbox" class="form-check-input" id="available" checked>
+        <label class="form-check-label" for="available">Available</label>
+    </div>
+    <button type="submit" class="btn btn-primary">Add Book</button>
+</form>
+
+<script>
+document.getElementById('bookForm').addEventListener('submit', function(event) {
+    event.preventDefault(); // Prevent the default form submission
+
+    const title = document.getElementById('title').value;
+    const author = document.getElementById('author').value;
+    const year = document.getElementById('year').value;
+    const category = document.getElementById('category').value;
+    const available = document.getElementById('available').checked;
+
+    const data = {
+    title: title,
+    author: author,
+    year: parseInt(year),  // Convert year to a number
+    category: category,
+    available: available
+};
+    fetch('/books/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json' // Set content type
+        },
+        body: JSON.stringify(data) // Convert data to JSON
+    })
+    .then(response => {
+        if (response.ok) {
+            alert('Book added successfully!'); // Success message
+            // Optionally redirect or refresh the page
+        } else {
+            alert('Failed to add book.'); // Error message
+        }
+    })
+    .catch(error => console.error('Error:', error)); // Error handling
+});
+</script>
+{% endblock %}

@@ -1,0 +1,23 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+}
+
+header {
+    margin-bottom: 20px;
+}
+
+footer {
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #f8f9fa;
+}
+.carousel-item img {
+    height: 400px; /* Set a fixed height for the carousel images */
+    object-fit: cover; /* Ensure the images cover the entire area */
+}
+
+.carousel-caption {
+    background-color: rgba(0, 0, 0, 0.5); /* Add a background to the caption for better readability */
+    padding: 10px;
+}

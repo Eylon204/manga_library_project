@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block title %}Create Loan{% endblock %}
+
+{% block content %}
+<h1>Create a New Loan</h1>
+<form id="loanForm" class="p-4 border rounded">
+    <div class="form-group">
+        <label for="customer_id">Customer ID</label>
+        <input type="number" class="form-control" id="customer_id" placeholder="Customer ID" required>
+    </div>
+    <div class="form-group">
+        <label for="book_id">Book ID</label>
+        <input type="number" class="form-control" id="book_id" placeholder="Book ID" required>
+    </div>
+    <div class="form-group">
+        <label for="loan_date">Loan Date</label>
+        <input type="date" class="form-control" id="loan_date" placeholder="Loan Date" required> 
+    </div>
+    <div class="form-group">
+        <label for="duration">Duration</label>
+        <select id="duration" class="form-control" required>
+            <option value="VERY_SHORT">For 2 days</option>
+            <option value="CUSTOM">For 5 days</option>
+            <option value="EXTENDED">For 10 days</option>
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Create Loan</button>
+</form>
+
+<script>
+document.getElementById('loanForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    const customerId =customer_id.value;
+    const bookId = book_id.value;
+    const loanDate = loan_date.value; 
+    const duration = duration.value;
+
+    const data = {
+        customer_id: customerId,
+        book_id: bookId,
+        loan_date: loanDate, 
+        duration: duration
+    };
+
+    fetch('/loans', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json' 
+        },
+        body: JSON.stringify(data) 
+    })
+    .then(response => {
+        if (response.ok) {
+            alert('Loan created successfully!');
+        } else {
+            alert('Failed to create loan.');
+        }
+    })
+    .catch(error => console.error('Error:', error));
+});
+</script>
+{% endblock %}

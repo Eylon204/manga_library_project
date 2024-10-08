@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+<h1>Login</h1>
+<form id="loginForm" class="p-4 border rounded">
+    <div class="form-group">
+        <label for="username">Username</label>
+        <input type="text" class="form-control" id="username" placeholder="Username" required>
+    </div>
+    <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" class="form-control" id="password" placeholder="Password" required>
+    </div>
+    <button type="submit" class="btn btn-primary">Login</button>
+</form>
+
+<script>
+document.getElementById('loginForm').addEventListener('submit', function(event) {
+    event.preventDefault(); // Prevent the default form submission
+
+    const username = document.getElementById('username').value;
+    const password = document.getElementById('password').value;
+
+    const data = {
+        username: username,
+        password: password
+    };
+
+    fetch('/login', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json' // Set content type
+        },
+        body: JSON.stringify(data) // Convert data to JSON
+    })
+    .then(response => {
+        if (response.ok) {
+            alert('Login successful!'); // Success message
+            window.location.href = '/'; // Redirect to home page
+        } else {
+            alert('Login failed. Please check your credentials.'); // Error message
+        }
+    })
+    .catch(error => console.error('Error:', error)); // Error handling
+});
+</script>
+{% endblock %}

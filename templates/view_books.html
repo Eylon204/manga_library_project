@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block title %}View Books{% endblock %}
+
+{% block content %}
+<h1>Books Collection</h1>
+<div class="row" id="booksContainer">
+    <!-- Book cards will be added here by JavaScript -->
+</div>
+
+<script>
+    // Function to display the books
+    function fetchBooks() {
+        fetch('/books/get_all') 
+            .then(response => response.json()) 
+            .then(data => {
+                const booksContainer = document.getElementById('booksContainer');
+                booksContainer.innerHTML = ''; // Clear existing content
+
+                // Iterate over each book and create a card for it
+                data.forEach(book => {
+                    // Determine the button based on availability
+                    const loanButton = book.available 
+                        ? `<a href="/create_loan?book_id=${book.id}" class="btn btn-primary">Loan</a>` 
+                        : `<button class="btn btn-secondary" disabled>Not Available</button>`; // Grey button if the book is not available
+
+                    // Create a card for the book
+                    const card = `
+                        <div class="col-md-4 mb-4">
+                            <div class="card">
+                                <img src="/static/images/${book.image_filename}" class="card-img-top" alt="${book.title}" style="height: 200px; object-fit: cover;">
+                                <div class="card-body">
+                                    <h5 class="card-title">${book.title}</h5>
+                                    <p class="card-text">Author: ${book.author}</p>
+                                    <p class="card-text">Year: ${book.year}</p>
+                                    <p class="card-text">Category: ${book.category}</p>
+                                    <p class="card-text">Available: ${book.available ? 'Yes' : 'No'}</p>
+                                    ${loanButton} <!-- Adding the loan button -->
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    booksContainer.innerHTML += card; // Add the card to the container
+                });
+            })
+            .catch(error => console.error('Error fetching books:', error)); // Log any errors during fetch
+    }
+
+    // Call the fetchBooks function when the page loads
+    window.onload = fetchBooks; 
+</script>
+
+<style>
+    /* Additional styles if needed */
+    .card {
+        border: 1px solid #007bff; /* Border color for the card */
+    }
+    .card-title {
+        font-weight: bold; /* Bold the card title */
+    }
+</style>
+
+{% endblock %}

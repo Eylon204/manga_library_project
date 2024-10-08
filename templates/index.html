@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+
+<!-- Main Content Section -->
+<h1>Welcome to the Library Management System!</h1>
+<p>Explore the collection of books.</p>
+<a href="/add_book" class="btn btn-success">Add a New Book</a>
+<a href="/add_customer" class="btn btn-primary">Add a New Customer</a>
+<a href="/create_loan" class="btn btn-info">Create a New Loan</a>
+
+<!-- Carousel Section -->
+<div id="carouselExample" class="carousel slide" data-ride="carousel">
+    <div class="carousel-inner">
+        <!-- Book 1 -->
+        <div class="carousel-item active">
+            <a href="{{ url_for('book_bp.get_book_by_title', title='Naruto') }}">
+                <img src="/static/images/Naruto.jpg" class="d-block w-100" style="height: 400px; object-fit: cover;" alt="Naruto"> 
+                <div class="carousel-caption d-none d-md-block">
+                    <h5>Naruto</h5>
+                    <p>Naruto is a Japanese manga series written and illustrated by Masashi Kishimoto.</p>
+                </div>
+            </a>
+        </div>
+        <!-- Book 2 -->
+        <div class="carousel-item">
+            <a href="{{ url_for('book_bp.get_book_by_title', title='One Piece') }}">
+                <img src="/static/images/One Piece.jpg" class="d-block w-100" style="height: 400px; object-fit: cover;" alt="One Piece"> 
+                <div class="carousel-caption d-none d-md-block">
+                    <h5>One Piece</h5>
+                    <p>Luffy is a young adventurer who sets off on a journey to find the legendary treasure.</p>
+                </div>
+            </a>
+        </div>
+        <!-- Book 3 -->
+        <div class="carousel-item">
+            <a href="{{ url_for('book_bp.get_book_by_title', title='Demon Slayer') }}">
+                <img src="/static/images/Demon Slayer: Kimetsu no Yaiba.jpg" class="d-block w-100" style="height: 400px; object-fit: cover;" alt="Demon Slayer"> 
+                <div class="carousel-caption d-none d-md-block">
+                    <h5>Demon Slayer</h5>
+                    <p>Tanjiro sets out to become a demon slayer to avenge his family and cure his sister.</p>
+                </div>
+            </a>
+        </div>
+    </div>
+    <a class="carousel-control-prev" href="#carouselExample" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+    </a>
+    <a class="carousel-control-next" href="#carouselExample" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+    </a>
+</div>
+
+<div class="mt-4">
+    <h2>About Our Library</h2>
+    <p>Welcome to our library management system where you can easily manage your book loans and explore a wide range of books!</p>
+</div>
+
+{% endblock %}
